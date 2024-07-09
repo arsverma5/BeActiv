@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAMbPIMntt_WkBIe-88suePGjECGzapWAw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>972522101109</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ArshiaVerma.BeActiv</string>
+	<key>PROJECT_ID</key>
+	<string>stepsauthentication</string>
+	<key>STORAGE_BUCKET</key>
+	<string>stepsauthentication.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:972522101109:ios:f87410853fb1c6b7d1db3c</string>
+</dict>
+</plist>

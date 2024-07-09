@@ -11,6 +11,45 @@
 		9C39A5502C2DBD6D000C97BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A54F2C2DBD6D000C97BB /* ContentView.swift */; };
 		9C39A5522C2DBD6F000C97BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C39A5512C2DBD6F000C97BB /* Assets.xcassets */; };
 		9C39A5552C2DBD6F000C97BB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C39A5542C2DBD6F000C97BB /* Preview Assets.xcassets */; };
+		9C39A55D2C2DBE4E000C97BB /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A55C2C2DBE4E000C97BB /* HealthStore.swift */; };
+		9C39A5612C2E4100000C97BB /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5602C2E4100000C97BB /* Step.swift */; };
+		9C39A5642C307020000C97BB /* StepListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5632C307020000C97BB /* StepListView.swift */; };
+		9C39A5672C3070ED000C97BB /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5662C3070ED000C97BB /* Checker.swift */; };
+		9C39A5692C3073E2000C97BB /* TodayStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5682C3073E2000C97BB /* TodayStepView.swift */; };
+		9C39A56E2C307B5A000C97BB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A56D2C307B5A000C97BB /* LoginView.swift */; };
+		9C39A5712C307D77000C97BB /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5702C307D77000C97BB /* InputView.swift */; };
+		9C39A5732C30DA8C000C97BB /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5722C30DA8C000C97BB /* RegistrationView.swift */; };
+		9C39A5762C30DD96000C97BB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5752C30DD96000C97BB /* ProfileView.swift */; };
+		9C39A5782C30DFE8000C97BB /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5772C30DFE8000C97BB /* SettingsRowView.swift */; };
+		9C39A57B2C30E3F8000C97BB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A57A2C30E3F8000C97BB /* User.swift */; };
+		9C39A57D2C31AE7A000C97BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C39A57C2C31AE7A000C97BB /* GoogleService-Info.plist */; };
+		9C39A5802C31AFAC000C97BB /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9C39A57F2C31AFAC000C97BB /* FirebaseAuth */; };
+		9C39A5822C31AFAC000C97BB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C39A5812C31AFAC000C97BB /* FirebaseFirestore */; };
+		9C39A5842C31AFAC000C97BB /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9C39A5832C31AFAC000C97BB /* FirebaseFirestoreSwift */; };
+		9C39A5862C31AFAC000C97BB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9C39A5852C31AFAC000C97BB /* FirebaseStorage */; };
+		9C39A58A2C31B095000C97BB /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5892C31B095000C97BB /* AuthViewModel.swift */; };
+		9C39A58C2C345119000C97BB /* HealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A58B2C345119000C97BB /* HealthView.swift */; };
+		9C39A58E2C3452D5000C97BB /* ChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A58D2C3452D5000C97BB /* ChallengesView.swift */; };
+		9C39A5902C3452FB000C97BB /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A58F2C3452FB000C97BB /* FriendsView.swift */; };
+		9C39A5922C345319000C97BB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5912C345319000C97BB /* MainView.swift */; };
+		9C39A5942C349B36000C97BB /* Challenges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5932C349B36000C97BB /* Challenges.swift */; };
+		9C39A5972C349BA0000C97BB /* ChallengesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5962C349BA0000C97BB /* ChallengesViewModel.swift */; };
+		9C39A59B2C34A3F4000C97BB /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A59A2C34A3F4000C97BB /* Friends.swift */; };
+		9C39A59D2C34A472000C97BB /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A59C2C34A472000C97BB /* FriendsViewModel.swift */; };
+		9C39A59F2C398038000C97BB /* ChallengeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A59E2C398038000C97BB /* ChallengeManager.swift */; };
+		9C39A5A12C3993A2000C97BB /* HealthSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5A02C3993A2000C97BB /* HealthSteps.swift */; };
+		9C39A5A32C3A460E000C97BB /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5A22C3A460E000C97BB /* ContactManager.swift */; };
+		9C39A5A52C3A4A9D000C97BB /* AppUserChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5A42C3A4A9D000C97BB /* AppUserChecker.swift */; };
+		9C39A5A72C3A4ABF000C97BB /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5A62C3A4ABF000C97BB /* AddFriendView.swift */; };
+		9C39A5A92C3C364E000C97BB /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5A82C3C364E000C97BB /* Leaderboard.swift */; };
+		9C39A5AB2C3C36A2000C97BB /* LeaderboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5AA2C3C36A2000C97BB /* LeaderboardViewModel.swift */; };
+		9C39A5AD2C3C36DC000C97BB /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5AC2C3C36DC000C97BB /* LeaderboardView.swift */; };
+		9C39A5AF2C3C3710000C97BB /* ChallengesLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5AE2C3C3710000C97BB /* ChallengesLeaderboard.swift */; };
+		9C39A5B12C3C3740000C97BB /* ChallengesLeaderboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B02C3C3740000C97BB /* ChallengesLeaderboardViewModel.swift */; };
+		9C39A5B32C3C3764000C97BB /* ChallengesLeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B22C3C3764000C97BB /* ChallengesLeaderboardView.swift */; };
+		9C39A5B52C3C3897000C97BB /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B42C3C3897000C97BB /* LeaderboardsView.swift */; };
+		9C39A5B72C3CA766000C97BB /* LeaderboardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B62C3CA766000C97BB /* LeaderboardsViewModel.swift */; };
+		9C39A5B92C3CA7D2000C97BB /* FriendLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B82C3CA7D2000C97BB /* FriendLeaderboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +58,43 @@
 		9C39A54F2C2DBD6D000C97BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9C39A5512C2DBD6F000C97BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C39A5542C2DBD6F000C97BB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9C39A55C2C2DBE4E000C97BB /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		9C39A55E2C2DBF80000C97BB /* BeActiv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeActiv.entitlements; sourceTree = "<group>"; };
+		9C39A5602C2E4100000C97BB /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
+		9C39A5632C307020000C97BB /* StepListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepListView.swift; sourceTree = "<group>"; };
+		9C39A5662C3070ED000C97BB /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		9C39A5682C3073E2000C97BB /* TodayStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayStepView.swift; sourceTree = "<group>"; };
+		9C39A56D2C307B5A000C97BB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		9C39A5702C307D77000C97BB /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		9C39A5722C30DA8C000C97BB /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		9C39A5752C30DD96000C97BB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		9C39A5772C30DFE8000C97BB /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		9C39A57A2C30E3F8000C97BB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9C39A57C2C31AE7A000C97BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9C39A5892C31B095000C97BB /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		9C39A58B2C345119000C97BB /* HealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthView.swift; sourceTree = "<group>"; };
+		9C39A58D2C3452D5000C97BB /* ChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesView.swift; sourceTree = "<group>"; };
+		9C39A58F2C3452FB000C97BB /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		9C39A5912C345319000C97BB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9C39A5932C349B36000C97BB /* Challenges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenges.swift; sourceTree = "<group>"; };
+		9C39A5962C349BA0000C97BB /* ChallengesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesViewModel.swift; sourceTree = "<group>"; };
+		9C39A59A2C34A3F4000C97BB /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
+		9C39A59C2C34A472000C97BB /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
+		9C39A59E2C398038000C97BB /* ChallengeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeManager.swift; sourceTree = "<group>"; };
+		9C39A5A02C3993A2000C97BB /* HealthSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthSteps.swift; sourceTree = "<group>"; };
+		9C39A5A22C3A460E000C97BB /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		9C39A5A42C3A4A9D000C97BB /* AppUserChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUserChecker.swift; sourceTree = "<group>"; };
+		9C39A5A62C3A4ABF000C97BB /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
+		9C39A5A82C3C364E000C97BB /* Leaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
+		9C39A5AA2C3C36A2000C97BB /* LeaderboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewModel.swift; sourceTree = "<group>"; };
+		9C39A5AC2C3C36DC000C97BB /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		9C39A5AE2C3C3710000C97BB /* ChallengesLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesLeaderboard.swift; sourceTree = "<group>"; };
+		9C39A5B02C3C3740000C97BB /* ChallengesLeaderboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesLeaderboardViewModel.swift; sourceTree = "<group>"; };
+		9C39A5B22C3C3764000C97BB /* ChallengesLeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesLeaderboardView.swift; sourceTree = "<group>"; };
+		9C39A5B42C3C3897000C97BB /* LeaderboardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsView.swift; sourceTree = "<group>"; };
+		9C39A5B62C3CA766000C97BB /* LeaderboardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsViewModel.swift; sourceTree = "<group>"; };
+		9C39A5B82C3CA7D2000C97BB /* FriendLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendLeaderboard.swift; sourceTree = "<group>"; };
+		9C39A5BA2C3D7D12000C97BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +102,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C39A5802C31AFAC000C97BB /* FirebaseAuth in Frameworks */,
+				9C39A5862C31AFAC000C97BB /* FirebaseStorage in Frameworks */,
+				9C39A5822C31AFAC000C97BB /* FirebaseFirestore in Frameworks */,
+				9C39A5842C31AFAC000C97BB /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,9 +131,20 @@
 		9C39A54C2C2DBD6D000C97BB /* BeActiv */ = {
 			isa = PBXGroup;
 			children = (
+				9C39A5BA2C3D7D12000C97BB /* Info.plist */,
+				9C39A5952C349B82000C97BB /* ViewModels */,
+				9C39A5792C30E3EE000C97BB /* Model */,
+				9C39A5742C30DD86000C97BB /* Profile */,
+				9C39A56F2C307D64000C97BB /* Components */,
+				9C39A56A2C307AC6000C97BB /* Core */,
+				9C39A5652C3070C7000C97BB /* Utils */,
+				9C39A5622C307004000C97BB /* Views */,
+				9C39A55F2C2E40E6000C97BB /* Models */,
+				9C39A55E2C2DBF80000C97BB /* BeActiv.entitlements */,
+				9C39A55B2C2DBE3B000C97BB /* Store */,
 				9C39A54D2C2DBD6D000C97BB /* BeActivApp.swift */,
-				9C39A54F2C2DBD6D000C97BB /* ContentView.swift */,
 				9C39A5512C2DBD6F000C97BB /* Assets.xcassets */,
+				9C39A57C2C31AE7A000C97BB /* GoogleService-Info.plist */,
 				9C39A5532C2DBD6F000C97BB /* Preview Content */,
 			);
 			path = BeActiv;
@@ -65,6 +156,136 @@
 				9C39A5542C2DBD6F000C97BB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9C39A55B2C2DBE3B000C97BB /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A55C2C2DBE4E000C97BB /* HealthStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		9C39A55F2C2E40E6000C97BB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5602C2E4100000C97BB /* Step.swift */,
+				9C39A5932C349B36000C97BB /* Challenges.swift */,
+				9C39A59A2C34A3F4000C97BB /* Friends.swift */,
+				9C39A59E2C398038000C97BB /* ChallengeManager.swift */,
+				9C39A5A02C3993A2000C97BB /* HealthSteps.swift */,
+				9C39A5A22C3A460E000C97BB /* ContactManager.swift */,
+				9C39A5A82C3C364E000C97BB /* Leaderboard.swift */,
+				9C39A5AE2C3C3710000C97BB /* ChallengesLeaderboard.swift */,
+				9C39A5B82C3CA7D2000C97BB /* FriendLeaderboard.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9C39A5622C307004000C97BB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5632C307020000C97BB /* StepListView.swift */,
+				9C39A5682C3073E2000C97BB /* TodayStepView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9C39A5652C3070C7000C97BB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5662C3070ED000C97BB /* Checker.swift */,
+				9C39A5A42C3A4A9D000C97BB /* AppUserChecker.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		9C39A56A2C307AC6000C97BB /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A56C2C307B49000C97BB /* Authentication */,
+				9C39A56B2C307ACA000C97BB /* Root */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9C39A56B2C307ACA000C97BB /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A54F2C2DBD6D000C97BB /* ContentView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		9C39A56C2C307B49000C97BB /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5882C31B009000C97BB /* ViewModels */,
+				9C39A5872C31B004000C97BB /* Views */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		9C39A56F2C307D64000C97BB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5702C307D77000C97BB /* InputView.swift */,
+				9C39A5772C30DFE8000C97BB /* SettingsRowView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9C39A5742C30DD86000C97BB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5752C30DD96000C97BB /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		9C39A5792C30E3EE000C97BB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A57A2C30E3F8000C97BB /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9C39A5872C31B004000C97BB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A56D2C307B5A000C97BB /* LoginView.swift */,
+				9C39A5722C30DA8C000C97BB /* RegistrationView.swift */,
+				9C39A58B2C345119000C97BB /* HealthView.swift */,
+				9C39A58D2C3452D5000C97BB /* ChallengesView.swift */,
+				9C39A58F2C3452FB000C97BB /* FriendsView.swift */,
+				9C39A5912C345319000C97BB /* MainView.swift */,
+				9C39A5A62C3A4ABF000C97BB /* AddFriendView.swift */,
+				9C39A5AC2C3C36DC000C97BB /* LeaderboardView.swift */,
+				9C39A5B22C3C3764000C97BB /* ChallengesLeaderboardView.swift */,
+				9C39A5B42C3C3897000C97BB /* LeaderboardsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9C39A5882C31B009000C97BB /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5892C31B095000C97BB /* AuthViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		9C39A5952C349B82000C97BB /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				9C39A5962C349BA0000C97BB /* ChallengesViewModel.swift */,
+				9C39A59C2C34A472000C97BB /* FriendsViewModel.swift */,
+				9C39A5AA2C3C36A2000C97BB /* LeaderboardViewModel.swift */,
+				9C39A5B02C3C3740000C97BB /* ChallengesLeaderboardViewModel.swift */,
+				9C39A5B62C3CA766000C97BB /* LeaderboardsViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +304,12 @@
 			dependencies = (
 			);
 			name = BeActiv;
+			packageProductDependencies = (
+				9C39A57F2C31AFAC000C97BB /* FirebaseAuth */,
+				9C39A5812C31AFAC000C97BB /* FirebaseFirestore */,
+				9C39A5832C31AFAC000C97BB /* FirebaseFirestoreSwift */,
+				9C39A5852C31AFAC000C97BB /* FirebaseStorage */,
+			);
 			productName = BeActiv;
 			productReference = 9C39A54A2C2DBD6D000C97BB /* BeActiv.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +338,9 @@
 				Base,
 			);
 			mainGroup = 9C39A5412C2DBD6D000C97BB;
+			packageReferences = (
+				9C39A57E2C31AFAC000C97BB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 9C39A54B2C2DBD6D000C97BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,6 +357,7 @@
 			files = (
 				9C39A5552C2DBD6F000C97BB /* Preview Assets.xcassets in Resources */,
 				9C39A5522C2DBD6F000C97BB /* Assets.xcassets in Resources */,
+				9C39A57D2C31AE7A000C97BB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +368,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C39A58E2C3452D5000C97BB /* ChallengesView.swift in Sources */,
+				9C39A5A12C3993A2000C97BB /* HealthSteps.swift in Sources */,
+				9C39A59B2C34A3F4000C97BB /* Friends.swift in Sources */,
+				9C39A59D2C34A472000C97BB /* FriendsViewModel.swift in Sources */,
+				9C39A5922C345319000C97BB /* MainView.swift in Sources */,
+				9C39A57B2C30E3F8000C97BB /* User.swift in Sources */,
 				9C39A5502C2DBD6D000C97BB /* ContentView.swift in Sources */,
+				9C39A5672C3070ED000C97BB /* Checker.swift in Sources */,
+				9C39A58C2C345119000C97BB /* HealthView.swift in Sources */,
+				9C39A5A72C3A4ABF000C97BB /* AddFriendView.swift in Sources */,
+				9C39A5AD2C3C36DC000C97BB /* LeaderboardView.swift in Sources */,
+				9C39A5AB2C3C36A2000C97BB /* LeaderboardViewModel.swift in Sources */,
+				9C39A5972C349BA0000C97BB /* ChallengesViewModel.swift in Sources */,
+				9C39A5642C307020000C97BB /* StepListView.swift in Sources */,
+				9C39A5612C2E4100000C97BB /* Step.swift in Sources */,
+				9C39A59F2C398038000C97BB /* ChallengeManager.swift in Sources */,
+				9C39A55D2C2DBE4E000C97BB /* HealthStore.swift in Sources */,
 				9C39A54E2C2DBD6D000C97BB /* BeActivApp.swift in Sources */,
+				9C39A5B32C3C3764000C97BB /* ChallengesLeaderboardView.swift in Sources */,
+				9C39A5902C3452FB000C97BB /* FriendsView.swift in Sources */,
+				9C39A5A92C3C364E000C97BB /* Leaderboard.swift in Sources */,
+				9C39A5712C307D77000C97BB /* InputView.swift in Sources */,
+				9C39A56E2C307B5A000C97BB /* LoginView.swift in Sources */,
+				9C39A5B12C3C3740000C97BB /* ChallengesLeaderboardViewModel.swift in Sources */,
+				9C39A5782C30DFE8000C97BB /* SettingsRowView.swift in Sources */,
+				9C39A58A2C31B095000C97BB /* AuthViewModel.swift in Sources */,
+				9C39A5A52C3A4A9D000C97BB /* AppUserChecker.swift in Sources */,
+				9C39A5A32C3A460E000C97BB /* ContactManager.swift in Sources */,
+				9C39A5692C3073E2000C97BB /* TodayStepView.swift in Sources */,
+				9C39A5942C349B36000C97BB /* Challenges.swift in Sources */,
+				9C39A5B72C3CA766000C97BB /* LeaderboardsViewModel.swift in Sources */,
+				9C39A5B92C3CA7D2000C97BB /* FriendLeaderboard.swift in Sources */,
+				9C39A5B52C3C3897000C97BB /* LeaderboardsView.swift in Sources */,
+				9C39A5762C30DD96000C97BB /* ProfileView.swift in Sources */,
+				9C39A5732C30DA8C000C97BB /* RegistrationView.swift in Sources */,
+				9C39A5AF2C3C3710000C97BB /* ChallengesLeaderboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,12 +534,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BeActiv/BeActiv.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeActiv/Preview Content\"";
 				DEVELOPMENT_TEAM = 3H3W4LZ9JM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BeActiv/Info.plist;
+				INFOPLIST_KEY_NSContactsUsageDescription = "This app needs access to your contacts to find friends.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "In order to use this app to its full extent, you must agree to let us access your health data.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "In order to use this app to its full extent, you must agree to let us access your health data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -298,12 +568,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BeActiv/BeActiv.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeActiv/Preview Content\"";
 				DEVELOPMENT_TEAM = 3H3W4LZ9JM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BeActiv/Info.plist;
+				INFOPLIST_KEY_NSContactsUsageDescription = "This app needs access to your contacts to find friends.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "In order to use this app to its full extent, you must agree to let us access your health data.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "In order to use this app to its full extent, you must agree to let us access your health data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -344,6 +619,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9C39A57E2C31AFAC000C97BB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.28.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C39A57F2C31AFAC000C97BB /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C39A57E2C31AFAC000C97BB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9C39A5812C31AFAC000C97BB /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C39A57E2C31AFAC000C97BB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		9C39A5832C31AFAC000C97BB /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C39A57E2C31AFAC000C97BB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		9C39A5852C31AFAC000C97BB /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C39A57E2C31AFAC000C97BB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9C39A5422C2DBD6D000C97BB /* Project object */;
 }
