@@ -12,6 +12,8 @@ struct AddFriendsView: View {
     @StateObject private var contactManager = ContactManager()
     @State private var registeredContacts: [CNContact] = []
     @State private var showingAlert = false
+    @State private var searchResults: [User] = []
+    @State private var isSearching: Bool = false
     @EnvironmentObject private var friendsViewModel: FriendsViewModel
     private let appUserChecker = AppUserChecker() // Ensure correct instantiation
     
@@ -25,7 +27,15 @@ struct AddFriendsView: View {
                         Text("\(contact.givenName) \(contact.familyName)")
                         Spacer()
                         Button("Add Friend") {
-                            friendsViewModel.addFriend("\(contact.givenName) \(contact.familyName)")
+                            Task {
+                                isSearching = true
+                                searchResults = await friendsViewModel.searchFriend(by: "\(contact.givenName) \(contact.familyName)")
+                                isSearching = false
+                                
+                                if let user = searchResults.first {
+                                    friendsViewModel.addFriend(user)
+                                }
+                            }
                         }
                     }
                 }
@@ -47,6 +57,9 @@ struct AddFriendsView: View {
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Access Denied"), message: Text("Please enable contacts access in settings"), dismissButton: .default(Text("OK")))
         }
+        .alert(isPresented: $friendsViewModel.showAlert) {
+            Alert(title: Text("Error"), message: Text(friendsViewModel.alertMessage), dismissButton: .default(Text("OK")))
+        }
         .navigationTitle("Add Friends")
     }
 }
@@ -57,6 +70,9 @@ struct AddFriendsView: View {
             .environmentObject(FriendsViewModel())
     }
 }
+
+
+
 
 
 

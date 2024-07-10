@@ -9,7 +9,9 @@ import SwiftUI
 
 struct FriendsView: View {
     @StateObject private var viewModel = FriendsViewModel()
-    @State private var newFriendName: String = ""
+    @State private var searchQuery: String = ""
+    @State private var searchResults: [User] = []
+    @State private var isSearching: Bool = false
     
     var body: some View {
         NavigationView {
@@ -24,9 +26,6 @@ struct FriendsView: View {
                         VStack(alignment: .leading) {
                             Text(friend.name)
                                 .font(.headline)
-                            Text("\(friend.stepCount) steps")
-                                .font(.subheadline)
-                                .foregroundColor(Color.gray)
                         }
                         Spacer()
                     }
@@ -34,23 +33,48 @@ struct FriendsView: View {
                 }
                 
                 HStack {
-                    TextField("New friend's name", text: $newFriendName)
+                    TextField("Search friend's name", text: $searchQuery)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
                     
                     Button(action: {
-                        if !newFriendName.isEmpty {
-                            viewModel.addFriend(newFriendName)
-                            newFriendName = ""
+                        Task {
+                            isSearching = true
+                            searchResults = await viewModel.searchFriend(by: searchQuery)
+                            isSearching = false
                         }
                     }) {
-                        Image(systemName: "plus.circle.fill")
+                        Image(systemName: "magnifyingglass.circle.fill")
                             .font(.largeTitle)
                             .foregroundColor(.blue)
                     }
                     .padding()
                 }
                 .padding(.bottom)
+                
+                if isSearching {
+                    ProgressView()
+                } else {
+                    List(searchResults) { user in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(user.fullName)
+                                    .font(.headline)
+                                Text(user.email)
+                                    .font(.subheadline)
+                                    .foregroundColor(Color.gray)
+                            }
+                            Spacer()
+                            Button(action: {
+                                viewModel.addFriend(user)
+                            }) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    }
+                }
                 
                 NavigationLink(destination: AddFriendsView()) {
                     Text("Add Friends from Contacts")
@@ -59,9 +83,16 @@ struct FriendsView: View {
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(8)
                 }
-                .padding()
+                .padding(.bottom)
+                
             }
-            .navigationTitle("Friends")
+            .navigationBarTitle("Friends")
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(title: Text("Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+            }
+        }
+        .onAppear {
+            viewModel.loadFriends()
         }
     }
 }
@@ -69,5 +100,9 @@ struct FriendsView: View {
 #Preview {
     FriendsView()
 }
+
+
+
+
 
 

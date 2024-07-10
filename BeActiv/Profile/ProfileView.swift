@@ -9,17 +9,19 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
+    
     var body: some View {
         if let user = viewModel.currentUser {
             List {
                 Section {
                     HStack {
-                        Text(user.initials).font(.title)
+                        Text(user.initials)
+                            .font(.title)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .frame(width: 72, height: 72)
                             .background(Color(.systemGray3))
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                            .clipShape(Circle())
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text(user.fullName)
@@ -30,7 +32,7 @@ struct ProfileView: View {
                             Text(user.email)
                                 .font(.footnote)
                                 .foregroundColor(.gray)
-                            
+                        
                         }
                     }
                 }
@@ -43,8 +45,6 @@ struct ProfileView: View {
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
-                    
-                    
                 }
                 
                 Section("Account") {
@@ -59,16 +59,14 @@ struct ProfileView: View {
                     } label: {
                         SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: Color.red)
                     }
-                    
                 }
             }
         }
-
-        
     }
 }
 
 #Preview {
     ProfileView()
 }
+
  
