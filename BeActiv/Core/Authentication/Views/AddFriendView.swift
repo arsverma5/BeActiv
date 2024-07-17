@@ -70,9 +70,3 @@ struct AddFriendsView: View {
             .environmentObject(FriendsViewModel())
     }
 }
-
-
-
-
-
-

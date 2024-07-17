@@ -57,5 +57,3 @@ class LeaderboardsViewModel: ObservableObject {
         }
     }
 }
-
-

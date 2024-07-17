@@ -1,10 +1,3 @@
-//
-//  FriendsViewModel.swift
-//  BeActiv
-//
-//  Created by Arshia Verma on 7/2/24.
-//
-
 import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
@@ -38,7 +31,7 @@ class FriendsViewModel: ObservableObject {
 
         let newFriend = Friends(name: user.fullName, imageName: "person.circle.fill")
         friends.append(newFriend)
-        saveFriendsToFirestore()
+        saveFriendsToFirestore(newFriend)
     }
 
     func loadFriends() {
@@ -58,15 +51,13 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-    func saveFriendsToFirestore() {
+    private func saveFriendsToFirestore(_ friend: Friends) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
-        for friend in friends {
-            let friendData: [String: Any] = ["name": friend.name]
-            db.collection("users").document(currentUserID).collection("friends").document(friend.id.uuidString).setData(friendData) { error in
-                if let error = error {
-                    print("Error saving friend: \(error)")
-                }
+        let friendData: [String: Any] = ["name": friend.name]
+        db.collection("users").document(currentUserID).collection("friends").document(friend.name).setData(friendData) { error in
+            if let error = error {
+                print("Error saving friend: \(error)")
             }
         }
     }
@@ -75,5 +66,35 @@ class FriendsViewModel: ObservableObject {
         alertMessage = message
         showAlert = true
     }
-}
+    
+    func removeFriend(_ friend: Friends) {
+        removeFriendFromDatabase(friend) { [weak self] success in
+            if success {
+                if let index = self?.friends.firstIndex(where: { $0.name == friend.name }) {
+                    self?.friends.remove(at: index)
+                }
+            } else {
+                self?.alertMessage = "Failed to remove friend."
+                self?.showAlert = true
+            }
+        }
+    }
 
+    private func removeFriendFromDatabase(_ friend: Friends, completion: @escaping (Bool) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        let db = Firestore.firestore()
+
+        db.collection("users").document(userId).collection("friends").document(friend.name).delete { error in
+            if let error = error {
+                print("Error removing friend: \(error)")
+                completion(false)
+            } else {
+                print("Friend removed successfully")
+                completion(true)
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+
 //
 //  ChallengesLeaderboardView.swift
 //  BeActiv
@@ -37,4 +38,3 @@ struct ChallengesLeaderboardView: View {
         }
     }
 }
-

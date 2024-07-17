@@ -73,5 +73,3 @@ struct ChallengesView: View {
 #Preview {
     ChallengesView()
 }
-
-

@@ -124,10 +124,3 @@ class ChallengesViewModel: ObservableObject {
         }
     }
 }
-
-
-
-
-
-
-

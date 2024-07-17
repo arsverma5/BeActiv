@@ -1,10 +1,3 @@
-//
-//  FriendsView.swift
-//  BeActiv
-//
-//  Created by Arshia Verma on 7/2/24.
-//
-
 import SwiftUI
 
 struct FriendsView: View {
@@ -12,13 +5,15 @@ struct FriendsView: View {
     @State private var searchQuery: String = ""
     @State private var searchResults: [User] = []
     @State private var isSearching: Bool = false
+    @State private var friendToRemove: Friends?
+    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
             VStack {
                 List(viewModel.friends) { friend in
                     HStack {
-                        Image(systemName: friend.imageName)
+                        Image(systemName: "person.crop.circle")
                             .resizable()
                             .frame(width: 40, height: 40)
                             .clipShape(Circle())
@@ -28,6 +23,13 @@ struct FriendsView: View {
                                 .font(.headline)
                         }
                         Spacer()
+                        Button(action: {
+                            friendToRemove = friend
+                            showAlert = true
+                        }) {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                        }
                     }
                     .padding(.vertical, 5)
                 }
@@ -84,25 +86,23 @@ struct FriendsView: View {
                         .cornerRadius(8)
                 }
                 .padding(.bottom)
-                
             }
             .navigationBarTitle("Friends")
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text("Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Remove Friend"),
+                    message: Text("Do you want to remove this friend?"),
+                    primaryButton: .destructive(Text("Yes")) {
+                        if let friend = friendToRemove {
+                            viewModel.removeFriend(friend)
+                        }
+                    },
+                    secondaryButton: .cancel()
+                )
             }
-        }
-        .onAppear {
-            viewModel.loadFriends()
+            .onAppear {
+                viewModel.loadFriends()
+            }
         }
     }
 }
-
-#Preview {
-    FriendsView()
-}
-
-
-
-
-
-

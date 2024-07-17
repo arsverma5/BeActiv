@@ -52,7 +52,3 @@ struct LeaderboardsView: View {
         }
     }
 }
-
-
-
-

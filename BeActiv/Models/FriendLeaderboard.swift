@@ -14,4 +14,3 @@ struct FriendLeaderboard: Identifiable, Codable {
     let steps: Int
     let challengesWon: Int
 }
-
