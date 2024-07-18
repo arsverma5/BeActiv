@@ -51,6 +51,7 @@
 		9C39A5B72C3CA766000C97BB /* LeaderboardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B62C3CA766000C97BB /* LeaderboardsViewModel.swift */; };
 		9C39A5B92C3CA7D2000C97BB /* FriendLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C39A5B82C3CA7D2000C97BB /* FriendLeaderboard.swift */; };
 		9C6315982C3F0DCD00F568AE /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6315972C3F0DCD00F568AE /* FriendRequestView.swift */; };
+		9C985F5D2C496ED3008B9CCE /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C985F5C2C496ED3008B9CCE /* FriendRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,7 @@
 		9C39A5B82C3CA7D2000C97BB /* FriendLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendLeaderboard.swift; sourceTree = "<group>"; };
 		9C39A5BA2C3D7D12000C97BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9C6315972C3F0DCD00F568AE /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
+		9C985F5C2C496ED3008B9CCE /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				9C39A5A82C3C364E000C97BB /* Leaderboard.swift */,
 				9C39A5AE2C3C3710000C97BB /* ChallengesLeaderboard.swift */,
 				9C39A5B82C3CA7D2000C97BB /* FriendLeaderboard.swift */,
+				9C985F5C2C496ED3008B9CCE /* FriendRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				9C39A58E2C3452D5000C97BB /* ChallengesView.swift in Sources */,
 				9C39A5A12C3993A2000C97BB /* HealthSteps.swift in Sources */,
 				9C39A59B2C34A3F4000C97BB /* Friends.swift in Sources */,
+				9C985F5D2C496ED3008B9CCE /* FriendRequest.swift in Sources */,
 				9C39A59D2C34A472000C97BB /* FriendsViewModel.swift in Sources */,
 				9C39A5922C345319000C97BB /* MainView.swift in Sources */,
 				9C39A57B2C30E3F8000C97BB /* User.swift in Sources */,

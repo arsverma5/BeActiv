@@ -5,33 +5,59 @@ struct FriendsView: View {
     @State private var searchQuery: String = ""
     @State private var searchResults: [User] = []
     @State private var isSearching: Bool = false
-    @State private var friendToRemove: Friends?
-    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
             VStack {
-                List(viewModel.friends) { friend in
-                    HStack {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                            .foregroundColor(.blue)
-                        VStack(alignment: .leading) {
-                            Text(friend.name)
-                                .font(.headline)
-                        }
-                        Spacer()
-                        Button(action: {
-                            friendToRemove = friend
-                            showAlert = true
-                        }) {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
+                List {
+                    Section(header: Text("Friends")) {
+                        ForEach(viewModel.friends) { friend in
+                            HStack {
+                                Image(systemName: friend.imageName)
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                                    .foregroundColor(.blue)
+                                VStack(alignment: .leading) {
+                                    Text(friend.name)
+                                        .font(.headline)
+                                }
+                                Spacer()
+                                Button(action: {
+                                    viewModel.removeFriend(friend)
+                                }) {
+                                    Image(systemName: "trash")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            .padding(.vertical, 5)
                         }
                     }
-                    .padding(.vertical, 5)
+                    
+                    Section(header: Text("Friend Requests")) {
+                        ForEach(viewModel.friendRequests) { request in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(request.senderName)
+                                        .font(.headline)
+                                }
+                                Spacer()
+                                Button(action: {
+                                    viewModel.acceptFriendRequest(request)
+                                }) {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                }
+                                Button(action: {
+                                    viewModel.declineFriendRequest(request)
+                                }) {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            .padding(.vertical, 5)
+                        }
+                    }
                 }
                 
                 HStack {
@@ -52,56 +78,37 @@ struct FriendsView: View {
                     }
                     .padding()
                 }
-                .padding(.bottom)
+                .padding()
                 
                 if isSearching {
-                    ProgressView()
-                } else {
-                    List(searchResults) { user in
-                        HStack {
-                            VStack(alignment: .leading) {
+                    ProgressView("Searching...")
+                        .padding()
+                } else if !searchResults.isEmpty {
+                    List {
+                        ForEach(searchResults) { user in
+                            HStack {
                                 Text(user.fullName)
                                     .font(.headline)
-                                Text(user.email)
-                                    .font(.subheadline)
-                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Button(action: {
+                                    viewModel.sendFriendRequest(to: user)
+                                }) {
+                                    Text("Add")
+                                        .foregroundColor(.blue)
+                                }
                             }
-                            Spacer()
-                            Button(action: {
-                                viewModel.addFriend(user)
-                            }) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.title)
-                                    .foregroundColor(.blue)
-                            }
+                            .padding(.vertical, 5)
                         }
                     }
                 }
-                
-                NavigationLink(destination: AddFriendsView()) {
-                    Text("Add Friends from Contacts")
-                        .foregroundColor(.blue)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                }
-                .padding(.bottom)
             }
             .navigationBarTitle("Friends")
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Remove Friend"),
-                    message: Text("Do you want to remove this friend?"),
-                    primaryButton: .destructive(Text("Yes")) {
-                        if let friend = friendToRemove {
-                            viewModel.removeFriend(friend)
-                        }
-                    },
-                    secondaryButton: .cancel()
-                )
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(title: Text("Message"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
             }
             .onAppear {
                 viewModel.loadFriends()
+                viewModel.loadFriendRequests()
             }
         }
     }
