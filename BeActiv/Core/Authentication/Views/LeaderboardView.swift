@@ -37,3 +37,4 @@ struct LeaderboardView: View {
         }
     }
 }
+

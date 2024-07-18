@@ -30,6 +30,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Leaderboards", systemImage: "list.star")
                 }
+                .environmentObject(LeaderboardsViewModel())
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")

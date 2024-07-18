@@ -13,4 +13,20 @@ struct FriendLeaderboard: Identifiable, Codable {
     let username: String
     let steps: Int
     let challengesWon: Int
+
+    init(id: String? = nil, username: String, steps: Int = 0, challengesWon: Int = 0) {
+        self.id = id
+        self.username = username
+        self.steps = steps
+        self.challengesWon = challengesWon
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case username = "name"
+        case steps = "stepCount"
+        case challengesWon
+    }
 }
+
+

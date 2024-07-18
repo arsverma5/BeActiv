@@ -1,10 +1,3 @@
-//
-//  LeaderboardsViewModel.swift
-//  BeActiv
-//
-//  Created by Arshia Verma on 7/8/24.
-//
-
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
@@ -42,11 +35,16 @@ class LeaderboardsViewModel: ObservableObject {
             }
 
             self.friends = documents.compactMap { doc -> FriendLeaderboard? in
-                try? doc.data(as: FriendLeaderboard.self)
+                let data = doc.data()
+                let username = data["name"] as? String ?? "Unknown"
+                let steps = data["stepCount"] as? Int ?? 0
+                let challengesWon = data["challengesWon"] as? Int ?? 0
+                return FriendLeaderboard(id: doc.documentID, username: username, steps: steps, challengesWon: challengesWon)
             }
 
             self.stepsLeaderboardEntries = self.friends.sorted { $0.steps > $1.steps }
             self.challengesLeaderboardEntries = self.friends.sorted { $0.challengesWon > $1.challengesWon }
+            print("Steps Leaderboard Entries: \(self.stepsLeaderboardEntries)")
         }
     }
 
