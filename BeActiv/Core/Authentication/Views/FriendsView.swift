@@ -45,20 +45,31 @@ struct FriendsView: View {
                                         .font(.headline)
                                 }
                                 Spacer()
-                                Button(action: {
-                                    viewModel.acceptFriendRequest(request)
-                                }) {
-                                    Image(systemName: "checkmark")
-                                        .foregroundColor(.green)
+                                
+                                HStack {
+                                    Button(action: {
+                                        print("Decline button clicked for \(request.senderName)")
+                                        viewModel.declineFriendRequest(request)
+                                    }) {
+                                        Image(systemName: "xmark")
+                                            .foregroundColor(.red)
+                                            .padding()
+                                    }
+                                    .buttonStyle(BorderlessButtonStyle())  // Avoid issues with button styles
+
+                                    Button(action: {
+                                        print("Accept button clicked for \(request.senderName)")
+                                        viewModel.acceptFriendRequest(request)
+                                    }) {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.green)
+                                            .padding()
+                                    }
+                                    .buttonStyle(BorderlessButtonStyle())  // Avoid issues with button styles
                                 }
-                                Button(action: {
-                                    viewModel.declineFriendRequest(request)
-                                }) {
-                                    Image(systemName: "xmark")
-                                        .foregroundColor(.red)
-                                }
+
+                                .padding(.vertical, 5)
                             }
-                            .padding(.vertical, 5)
                         }
                     }
                 }

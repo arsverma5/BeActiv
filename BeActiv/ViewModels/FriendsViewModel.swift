@@ -65,29 +65,27 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-    // Accept a friend request
     func acceptFriendRequest(_ request: FriendRequest) {
+        print("Accept button action confirmed for \(request.senderName)")
+        print("Request ID: \(request.id ?? "Unknown")")
+        
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
-        // Create a new friend entry
-        let newFriend = Friends(name: request.senderName, imageName: "person.circle.fill")
+        let currentUserFriend = Friends(name: request.senderName, imageName: "person.circle.fill")
+        let senderFriend = Friends(name: currentUser?.fullName ?? "", imageName: "person.circle.fill")
 
-        // Add to the current user's friends list
-        addFriend(newFriend)
-
-        // Add to the request sender's friends list
-        addFriendToUser(userId: request.senderId, friend: Friends(name: currentUser?.fullName ?? "", imageName: "person.circle.fill"))
-
-        // Remove the friend request
+        addFriend(currentUserFriend)
+        addFriendToUser(userId: request.senderId, friend: senderFriend)
         removeFriendRequest(request)
-
-        // Update leaderboard if necessary
         updateLeaderboard()
     }
+
+
 
     
     // Add a friend to a specific user's list
     private func addFriendToUser(userId: String, friend: Friends) {
+        print("Adding friend \(friend.name) to user \(userId)")
         let db = Firestore.firestore()
         let friendData: [String: Any] = ["name": friend.name]
 
@@ -102,10 +100,17 @@ class FriendsViewModel: ObservableObject {
 
 
 
+
     // Decline a friend request
     func declineFriendRequest(_ request: FriendRequest) {
+        print("Decline button action confirmed for \(request.senderName)")
+        print("Request ID: \(request.id ?? "Unknown")")
+        
         removeFriendRequest(request)
     }
+
+
+
 
     // Remove a friend request from Firestore
     private func removeFriendRequest(_ request: FriendRequest) {
@@ -120,6 +125,7 @@ class FriendsViewModel: ObservableObject {
             }
         }
     }
+
 
     // Load friend requests from Firestore
     func loadFriendRequests() {
