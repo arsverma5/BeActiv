@@ -69,13 +69,38 @@ class FriendsViewModel: ObservableObject {
     func acceptFriendRequest(_ request: FriendRequest) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
+        // Create a new friend entry
         let newFriend = Friends(name: request.senderName, imageName: "person.circle.fill")
-        friends.append(newFriend)
-        saveFriendsToFirestore(newFriend)
 
+        // Add to the current user's friends list
+        addFriend(newFriend)
+
+        // Add to the request sender's friends list
+        addFriendToUser(userId: request.senderId, friend: Friends(name: currentUser?.fullName ?? "", imageName: "person.circle.fill"))
+
+        // Remove the friend request
         removeFriendRequest(request)
+
+        // Update leaderboard if necessary
         updateLeaderboard()
     }
+
+    
+    // Add a friend to a specific user's list
+    private func addFriendToUser(userId: String, friend: Friends) {
+        let db = Firestore.firestore()
+        let friendData: [String: Any] = ["name": friend.name]
+
+        db.collection("users").document(userId).collection("friends").document(friend.name).setData(friendData) { error in
+            if let error = error {
+                print("Error saving friend to user \(userId): \(error)")
+            } else {
+                print("Friend added successfully to user \(userId)")
+            }
+        }
+    }
+
+
 
     // Decline a friend request
     func declineFriendRequest(_ request: FriendRequest) {
@@ -139,17 +164,17 @@ class FriendsViewModel: ObservableObject {
     }
 
     // Add a friend to the list and Firestore
-    func addFriend(_ user: User) {
-        if friends.contains(where: { $0.name == user.fullName }) {
+    func addFriend(_ friend: Friends) {
+        if friends.contains(where: { $0.name == friend.name }) {
             showAlert(with: "You are already friends with this person")
             return
         }
 
-        let newFriend = Friends(name: user.fullName, imageName: "person.circle.fill")
-        friends.append(newFriend)
-        saveFriendsToFirestore(newFriend)
+        friends.append(friend)
+        saveFriendsToFirestore(friend)
         updateLeaderboard()
     }
+
 
     // Load friends from Firestore
     func loadFriends() {
