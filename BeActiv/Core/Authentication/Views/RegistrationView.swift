@@ -12,7 +12,6 @@ struct RegistrationView: View {
     @State private var fullName = ""
     @State private var password = ""
     @State private var confirm = ""
-    @State private var username = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -25,8 +24,8 @@ struct RegistrationView: View {
                 .frame(width: 100, height: 120)
                 .padding(.vertical, 32)
             
+            // Input fields
             VStack(spacing: 24) {
-                // Input fields
                 InputView(text: $email,
                           title: "Email Address",
                           placeholder: "name@example.com")
@@ -36,32 +35,33 @@ struct RegistrationView: View {
                           title: "Full Name",
                           placeholder: "Example: Arshia Verma")
                 
-                InputView(text: $username,
-                          title: "Username",
-                          placeholder: "Enter your username")
-                
                 InputView(text: $password,
                           title: "Password",
                           placeholder: "Enter your password",
                           isSecureField: true)
                 
-                SecureField("Confirm Password", text: $confirm)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .overlay(
-                        Group {
-                            if !password.isEmpty && !confirm.isEmpty {
-                                if password == confirm {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                } else {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.red)
-                                }
-                            }
+                ZStack(alignment: .trailing) {
+                    InputView(text: $confirm,
+                              title: "Confirm Password",
+                              placeholder: "Confirm your password",
+                              isSecureField: true)
+                    
+                    if !password.isEmpty && !confirm.isEmpty {
+                        if password == confirm {
+                            Image(systemName: "checkmark.circle.fill")
+                                .imageScale(.large)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(.systemGreen))
+                        } else {
+                            Image(systemName: "xmark.circle.fill")
+                                .imageScale(.large)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(.systemRed))
                         }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 8)
-                    )
+                    }
+                }
+                
+            
             }
             .padding(.horizontal)
             .padding(.top, 12)
@@ -70,7 +70,7 @@ struct RegistrationView: View {
             Button {
                 Task {
                     do {
-                        try await viewModel.createUser(withEmail: email, password: password, fullname: fullName, username: username)
+                        try await viewModel.createUser(withEmail: email, password: password, fullname: fullName)
                     } catch {
                         print("Failed to create user: \(error.localizedDescription)")
                     }
@@ -81,7 +81,7 @@ struct RegistrationView: View {
                     .foregroundColor(.white)
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
-            .background(Color.blue)
+            .background(Color(.systemMint))
             .disabled(!formIsValid)
             .opacity(formIsValid ? 1.0 : 0.5)
             .cornerRadius(10)
@@ -111,11 +111,11 @@ struct RegistrationView: View {
     }
 }
 
-// MARK - AuthenticationFormProtocol
+// MARK: - AuthenticationFormProtocol
 
 extension RegistrationView: AuthtenticationFormProtocol {
     var formIsValid: Bool {
-        return !email.isEmpty && email.contains("@") && !password.isEmpty && password.count > 5 && !fullName.isEmpty && confirm == password && !username.isEmpty
+        return !email.isEmpty && email.contains("@") && !password.isEmpty && password.count > 5 && !fullName.isEmpty && confirm == password
     }
 }
 

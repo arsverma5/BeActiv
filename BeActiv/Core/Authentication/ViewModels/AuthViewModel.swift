@@ -35,7 +35,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createUser(withEmail email: String, password: String, fullname: String, username: String) async throws {
+    func createUser(withEmail email: String, password: String, fullname: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
@@ -58,7 +58,7 @@ class AuthViewModel: ObservableObject {
             let documentSnapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
             if documentSnapshot.exists {
                 self.currentUser = try? documentSnapshot.data(as: User.self)
-                print("Current user: \(self.currentUser)")
+                print("Current user: \(String(describing: self.currentUser))")
             } else {
                 print("Document does not exist.")
             }
@@ -77,3 +77,4 @@ class AuthViewModel: ObservableObject {
         }
     }
 }
+
