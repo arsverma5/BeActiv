@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 protocol AuthtenticationFormProtocol {
     var formIsValid: Bool { get }
@@ -77,4 +78,3 @@ class AuthViewModel: ObservableObject {
         }
     }
 }
-

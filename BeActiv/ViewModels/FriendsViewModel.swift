@@ -15,27 +15,25 @@ class FriendsViewModel: ObservableObject {
         fetchCurrentUser()
     }
 
+    // Fetch current user data
     func fetchCurrentUser() {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            return
-        }
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
         let db = Firestore.firestore()
-        db.collection("users").document(currentUserID).getDocument { (document, error) in
+        db.collection("users").document(currentUserID).getDocument { [weak self] (document, error) in
             if let document = document, document.exists {
-                self.currentUser = try? document.data(as: User.self)
-                self.loadFriends()
-                self.loadFriendRequests()
+                self?.currentUser = try? document.data(as: User.self)
+                self?.loadFriends()
+                self?.loadFriendRequests()
             } else {
                 print("User does not exist or error fetching user: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
     }
 
+    // Send a friend request to a user
     func sendFriendRequest(to user: User) {
-        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
-        
-        guard let currentUser = currentUser else {
+        guard let currentUserID = Auth.auth().currentUser?.uid, let currentUser = currentUser else {
             showAlert(with: "Failed to fetch current user details")
             return
         }
@@ -43,15 +41,15 @@ class FriendsViewModel: ObservableObject {
         let db = Firestore.firestore()
         let friendRequestsRef = db.collection("users").document(user.id!).collection("friendRequests")
 
-        friendRequestsRef.whereField("senderId", isEqualTo: currentUserID).getDocuments { (querySnapshot, error) in
+        friendRequestsRef.whereField("senderId", isEqualTo: currentUserID).getDocuments { [weak self] (querySnapshot, error) in
             if let error = error {
                 print("Error checking existing friend requests: \(error.localizedDescription)")
-                self.showAlert(with: "Failed to check existing friend requests")
+                self?.showAlert(with: "Failed to check existing friend requests")
                 return
             }
 
             if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
-                self.showAlert(with: "Friend request already sent to this user")
+                self?.showAlert(with: "Friend request already sent to this user")
                 return
             }
 
@@ -59,14 +57,15 @@ class FriendsViewModel: ObservableObject {
 
             do {
                 let _ = try friendRequestsRef.addDocument(from: newRequest)
-                self.showAlert(with: "Friend request sent to \(user.fullName)")
+                self?.showAlert(with: "Friend request sent to \(user.fullName)")
             } catch {
-                self.showAlert(with: "Failed to send friend request")
+                self?.showAlert(with: "Failed to send friend request")
                 print("Error sending friend request: \(error.localizedDescription)")
             }
         }
     }
 
+    // Accept a friend request
     func acceptFriendRequest(_ request: FriendRequest) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -75,14 +74,15 @@ class FriendsViewModel: ObservableObject {
         saveFriendsToFirestore(newFriend)
 
         removeFriendRequest(request)
-        // Update other parts of the app, like the leaderboard
         updateLeaderboard()
     }
 
+    // Decline a friend request
     func declineFriendRequest(_ request: FriendRequest) {
         removeFriendRequest(request)
     }
 
+    // Remove a friend request from Firestore
     private func removeFriendRequest(_ request: FriendRequest) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -96,22 +96,24 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
+    // Load friend requests from Firestore
     func loadFriendRequests() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
         let db = Firestore.firestore()
-        db.collection("users").document(currentUserID).collection("friendRequests").addSnapshotListener { snapshot, error in
+        db.collection("users").document(currentUserID).collection("friendRequests").addSnapshotListener { [weak self] snapshot, error in
             guard let documents = snapshot?.documents else {
                 print("Error fetching friend requests: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
 
-            self.friendRequests = documents.compactMap { document -> FriendRequest? in
+            self?.friendRequests = documents.compactMap { document -> FriendRequest? in
                 try? document.data(as: FriendRequest.self)
             }
         }
     }
 
+    // Search for a friend by name
     func searchFriend(by name: String) async -> [User] {
         var foundUsers: [User] = []
 
@@ -132,15 +134,11 @@ class FriendsViewModel: ObservableObject {
             }
         }
 
-        if foundUsers.isEmpty {
-            searchErrorMessage = "This person does not exist. Try again."
-        } else {
-            searchErrorMessage = nil
-        }
-
+        searchErrorMessage = foundUsers.isEmpty ? "This person does not exist. Try again." : nil
         return foundUsers
     }
 
+    // Add a friend to the list and Firestore
     func addFriend(_ user: User) {
         if friends.contains(where: { $0.name == user.fullName }) {
             showAlert(with: "You are already friends with this person")
@@ -150,21 +148,21 @@ class FriendsViewModel: ObservableObject {
         let newFriend = Friends(name: user.fullName, imageName: "person.circle.fill")
         friends.append(newFriend)
         saveFriendsToFirestore(newFriend)
-        // Update other parts of the app, like the leaderboard
         updateLeaderboard()
     }
 
+    // Load friends from Firestore
     func loadFriends() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
         let db = Firestore.firestore()
-        db.collection("users").document(currentUserID).collection("friends").getDocuments { (querySnapshot, error) in
+        db.collection("users").document(currentUserID).collection("friends").getDocuments { [weak self] (querySnapshot, error) in
             if let error = error {
                 print("Error getting friends: \(error)")
                 return
             }
 
-            self.friends = querySnapshot?.documents.compactMap { document -> Friends? in
+            self?.friends = querySnapshot?.documents.compactMap { document -> Friends? in
                 let data = document.data()
                 guard let name = data["name"] as? String else { return nil }
                 return Friends(name: name, imageName: "person.circle.fill")
@@ -172,6 +170,7 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
+    // Save a new friend to Firestore
     private func saveFriendsToFirestore(_ friend: Friends) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -184,17 +183,18 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
+    // Show an alert with a message
     private func showAlert(with message: String) {
         alertMessage = message
         showAlert = true
     }
 
+    // Remove a friend from Firestore and local data
     func removeFriend(_ friend: Friends) {
         removeFriendFromDatabase(friend) { [weak self] success in
             if success {
                 if let index = self?.friends.firstIndex(where: { $0.name == friend.name }) {
                     self?.friends.remove(at: index)
-                    // Update other parts of the app, like the leaderboard
                     self?.updateLeaderboard()
                 }
             } else {
@@ -204,6 +204,7 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
+    // Remove a friend from Firestore
     private func removeFriendFromDatabase(_ friend: Friends, completion: @escaping (Bool) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(false)
@@ -222,8 +223,8 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
+    // Update the leaderboard
     private func updateLeaderboard() {
-        // Code to update the leaderboard
-        // This could involve notifying other parts of your app to refresh their data
+        // Implement the logic to update the leaderboard
     }
 }

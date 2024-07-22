@@ -26,14 +26,15 @@ struct AddFriendsView: View {
                     HStack {
                         Text("\(contact.givenName) \(contact.familyName)")
                         Spacer()
-                        Button("Add Friend") {
+                        Button("Send Request") {
                             Task {
                                 isSearching = true
                                 searchResults = await friendsViewModel.searchFriend(by: "\(contact.givenName) \(contact.familyName)")
                                 isSearching = false
                                 
                                 if let user = searchResults.first {
-                                    friendsViewModel.addFriend(user)
+                                    await friendsViewModel.sendFriendRequest(to: user)
+                                    // Update UI to show the request has been sent
                                 }
                             }
                         }
@@ -64,9 +65,3 @@ struct AddFriendsView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        AddFriendsView()
-            .environmentObject(FriendsViewModel())
-    }
-}

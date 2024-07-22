@@ -97,9 +97,9 @@ struct FriendsView: View {
                             }
                             Spacer()
                             Button(action: {
-                                viewModel.addFriend(user)
+                                viewModel.sendFriendRequest(to: user)
                             }) {
-                                Text("Add Friend")
+                                Text("Send Request")
                                     .foregroundColor(.blue)
                             }
                         }
