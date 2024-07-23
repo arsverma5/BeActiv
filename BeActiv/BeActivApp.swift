@@ -16,18 +16,14 @@ struct BeActivApp: App {
     init() {
         // Configure Firebase at the very start
         FirebaseApp.configure()
+        // Add predefined challenges to Firestore
+        challengeManager.addPredefinedChallenges()
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
-                .onAppear {
-                    // Schedule the timer to add random challenges every 3 days
-                    Timer.scheduledTimer(withTimeInterval: 86400 * 3, repeats: true) { _ in
-                        challengeManager.addRandomChallenge()
-                    }
-                }
         }
     }
 }

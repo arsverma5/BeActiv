@@ -4,7 +4,6 @@
 //
 //  Created by Arshia Verma on 7/2/24.
 //
-
 import SwiftUI
 
 struct ChallengesView: View {
@@ -27,7 +26,7 @@ struct ChallengesView: View {
                             }
                         }
                         
-                        ProgressView(value: challenge.progress)
+                        ProgressView(value: challenge.progress, total: 1.0)
                             .progressViewStyle(LinearProgressViewStyle(tint: progressColor(for: challenge)))
                             .padding(.top, 8)
                         
@@ -62,8 +61,10 @@ struct ChallengesView: View {
     
     private func progressColor(for challenge: Challenge) -> Color {
         switch challenge.title {
-        case "Walk 10,000+ Steps for a Week":
+        case "Walk 10,000 Steps":
             return Color.green
+        case "Beat 5 Friends":
+            return Color.purple
         default:
             return Color.blue
         }

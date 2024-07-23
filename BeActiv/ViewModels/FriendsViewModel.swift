@@ -37,6 +37,12 @@ class FriendsViewModel: ObservableObject {
             return
         }
 
+        // Check if already friends
+        if friends.contains(where: { $0.name == user.fullName }) {
+            showAlert(with: "You are already friends with \(user.fullName)")
+            return
+        }
+
         let db = Firestore.firestore()
         let friendRequestsRef = db.collection("users").document(user.id!).collection("friendRequests")
 
@@ -64,6 +70,7 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
+
     private func showAlert(with message: String) {
         DispatchQueue.main.async {
             self.alertMessage = message
@@ -72,9 +79,6 @@ class FriendsViewModel: ObservableObject {
             print("Show Alert: \(self.showAlert)")  // Debug statement
         }
     }
-
-
-
 
     func acceptFriendRequest(_ request: FriendRequest) {
         print("Accept button action confirmed for \(request.senderName)")
@@ -91,10 +95,6 @@ class FriendsViewModel: ObservableObject {
         updateLeaderboard()
     }
 
-
-
-    
-    // Add a friend to a specific user's list
     private func addFriendToUser(userId: String, friend: Friends) {
         print("Adding friend \(friend.name) to user \(userId)")
         let db = Firestore.firestore()
@@ -109,10 +109,6 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-
-
-
-    // Decline a friend request
     func declineFriendRequest(_ request: FriendRequest) {
         print("Decline button action confirmed for \(request.senderName)")
         print("Request ID: \(request.id ?? "Unknown")")
@@ -120,10 +116,6 @@ class FriendsViewModel: ObservableObject {
         removeFriendRequest(request)
     }
 
-
-
-
-    // Remove a friend request from Firestore
     private func removeFriendRequest(_ request: FriendRequest) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -137,8 +129,6 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-
-    // Load friend requests from Firestore
     func loadFriendRequests() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -155,7 +145,6 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-    // Search for a friend by name
     func searchFriend(by name: String) async -> [User] {
         var foundUsers: [User] = []
 
@@ -180,7 +169,6 @@ class FriendsViewModel: ObservableObject {
         return foundUsers
     }
 
-    // Add a friend to the list and Firestore
     func addFriend(_ friend: Friends) {
         if friends.contains(where: { $0.name == friend.name }) {
             showAlert(with: "You are already friends with this person")
@@ -192,8 +180,6 @@ class FriendsViewModel: ObservableObject {
         updateLeaderboard()
     }
 
-
-    // Load friends from Firestore
     func loadFriends() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -212,7 +198,6 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-    // Save a new friend to Firestore
     private func saveFriendsToFirestore(_ friend: Friends) {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -221,17 +206,36 @@ class FriendsViewModel: ObservableObject {
         db.collection("users").document(currentUserID).collection("friends").document(friend.name).setData(friendData) { error in
             if let error = error {
                 print("Error saving friend: \(error)")
+            } else {
+                print("Friend saved successfully")
             }
         }
     }
 
-    // Remove a friend from Firestore and local data
     func removeFriend(_ friend: Friends) {
+        guard let currentUserID = Auth.auth().currentUser?.uid, let friendID = friend.id else {
+            print("Current user ID or friend ID is missing")
+            return
+        }
+
+        // Remove friend from current user's list
         removeFriendFromDatabase(friend) { [weak self] success in
             if success {
-                if let index = self?.friends.firstIndex(where: { $0.name == friend.name }) {
+                // Remove friend from current user's local list
+                if let index = self?.friends.firstIndex(where: { $0.id == friendID }) {
                     self?.friends.remove(at: index)
-                    self?.updateLeaderboard()
+                }
+
+                // Also remove the current user from the friend's list
+                self?.removeFriendFromUser(currentUserID: currentUserID, friendID: friendID) { success in
+                    if success {
+                        print("Successfully removed friend from the other user's list")
+                        self?.updateLeaderboard()
+                    } else {
+                        print("Failed to remove friend from the other user's list")
+                        self?.alertMessage = "Failed to update friend list for the other user."
+                        self?.showAlert = true
+                    }
                 }
             } else {
                 self?.alertMessage = "Failed to remove friend."
@@ -240,27 +244,42 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-    // Remove a friend from Firestore
     private func removeFriendFromDatabase(_ friend: Friends, completion: @escaping (Bool) -> Void) {
-        guard let userId = Auth.auth().currentUser?.uid else {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
             completion(false)
             return
         }
 
         let db = Firestore.firestore()
-        db.collection("users").document(userId).collection("friends").document(friend.name).delete { error in
+        db.collection("users").document(currentUserID).collection("friends").document(friend.id!).delete { error in
             if let error = error {
-                print("Error removing friend: \(error)")
+                print("Error removing friend from current user: \(error)")
                 completion(false)
             } else {
-                print("Friend removed successfully")
+                print("Friend removed successfully from current user")
                 completion(true)
             }
         }
     }
 
-    // Update the leaderboard
+    private func removeFriendFromUser(currentUserID: String, friendID: String, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("users").document(friendID).collection("friends").document(currentUserID).delete { error in
+            if let error = error {
+                print("Error removing friend from other user's friend list: \(error)")
+                completion(false)
+            } else {
+                print("Friend removed successfully from other user's friend list")
+                completion(true)
+            }
+        }
+    }
+
+
+
+
+
     private func updateLeaderboard() {
-        // Implement the logic to update the leaderboard
+        // Implementation for updating the leaderboard
     }
 }

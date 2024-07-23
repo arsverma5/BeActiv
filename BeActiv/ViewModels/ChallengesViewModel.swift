@@ -51,7 +51,14 @@ class ChallengesViewModel: ObservableObject {
         recordDailySteps(for: challenge, date: today, steps: stepsToday)
     }
     
-    func updateProgress(for challenge: Challenge, progress: Double) {
+    func updateProgress(for challenge: Challenge) {
+        guard let startDate = challenge.startDate, let endDate = challenge.endDate else { return }
+        
+        let daysElapsed = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
+        let totalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        let completedDays = challenge.dailyStepCounts.values.filter { $0 >= 10000 }.count
+        let progress = Double(completedDays) / Double(totalDays)
+        
         if let index = challenges.firstIndex(where: { $0.id == challenge.id }) {
             challenges[index].progress = progress
             if progress >= 1.0 {
@@ -73,14 +80,8 @@ class ChallengesViewModel: ObservableObject {
                 challenges[index].dailyStepCounts[dateString] = steps  // Update step count for the date
                 saveChallenge(challenges[index])
                 
-                // Check if challenge is completed
-                let daysMetGoal = challenges[index].dailyStepCounts.values.filter { $0 >= 10000 }.count
-                let progress = Double(daysMetGoal) / 7.0
-                
-                if progress >= 1.0 {
-                    challenges[index].isCompleted = true
-                    saveChallenge(challenges[index])
-                }
+                // Update progress
+                updateProgress(for: challenge)
             }
         }
     }
@@ -106,20 +107,19 @@ class ChallengesViewModel: ObservableObject {
                 return
             }
             
-            self.challenges = querySnapshot?.documents.compactMap { document -> Challenge? in
-                try? document.data(as: Challenge.self)
-            } ?? []
-            
-            // If no challenges exist, add the default challenge
-            if self.challenges.isEmpty {
-                let defaultChallenge = Challenge(
-                    title: "Walk 10,000+ Steps for a Week",
-                    description: "Achieve more than 10,000 steps each day for a whole week.",
-                    icon: "🏆",
-                    progress: 0.0
-                )
-                self.challenges.append(defaultChallenge)
-                self.saveChallenge(defaultChallenge)
+            if let documents = querySnapshot?.documents {
+                print("Challenges loaded: \(documents.count)")
+                self.challenges = documents.compactMap { document -> Challenge? in
+                    print("Document data: \(document.data())")  // Print raw document data
+                    do {
+                        let challenge = try document.data(as: Challenge.self)
+                        print("Loaded challenge: \(challenge.title)")
+                        return challenge
+                    } catch {
+                        print("Error decoding challenge: \(error.localizedDescription)")
+                        return nil
+                    }
+                }
             }
         }
     }
