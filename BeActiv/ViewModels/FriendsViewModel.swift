@@ -31,7 +31,6 @@ class FriendsViewModel: ObservableObject {
         }
     }
 
-    // Send a friend request to a user
     func sendFriendRequest(to user: User) {
         guard let currentUserID = Auth.auth().currentUser?.uid, let currentUser = currentUser else {
             showAlert(with: "Failed to fetch current user details")
@@ -64,6 +63,18 @@ class FriendsViewModel: ObservableObject {
             }
         }
     }
+
+    private func showAlert(with message: String) {
+        DispatchQueue.main.async {
+            self.alertMessage = message
+            self.showAlert = true
+            print("Alert Message: \(message)")  // Debug statement
+            print("Show Alert: \(self.showAlert)")  // Debug statement
+        }
+    }
+
+
+
 
     func acceptFriendRequest(_ request: FriendRequest) {
         print("Accept button action confirmed for \(request.senderName)")
@@ -212,12 +223,6 @@ class FriendsViewModel: ObservableObject {
                 print("Error saving friend: \(error)")
             }
         }
-    }
-
-    // Show an alert with a message
-    private func showAlert(with message: String) {
-        alertMessage = message
-        showAlert = true
     }
 
     // Remove a friend from Firestore and local data

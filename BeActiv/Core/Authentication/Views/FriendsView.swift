@@ -8,7 +8,26 @@ struct FriendsView: View {
     @State private var searchResults: [User] = []
     @State private var isSearching: Bool = false
     @State private var noResultsFound: Bool = false
-    
+
+    @State private var friendToRemove: Friends? = nil
+    @State private var alertType: AlertType? = nil
+
+    // issues with this but fixed into an enum data type with a switch case
+    // so the alert messages won't clash and get mixes up in SwiftUI
+    enum AlertType: Identifiable {
+        case sendRequest
+        case removeFriend
+
+        var id: String {
+            switch self {
+            case .sendRequest:
+                return "sendRequest"
+            case .removeFriend:
+                return "removeFriend"
+            }
+        }
+    }
+
     var body: some View {
         NavigationView {
             VStack {
@@ -27,7 +46,8 @@ struct FriendsView: View {
                                 }
                                 Spacer()
                                 Button(action: {
-                                    viewModel.removeFriend(friend)
+                                    friendToRemove = friend
+                                    alertType = .removeFriend
                                 }) {
                                     Image(systemName: "trash")
                                         .foregroundColor(.red)
@@ -36,7 +56,7 @@ struct FriendsView: View {
                             .padding(.vertical, 5)
                         }
                     }
-                    
+
                     Section(header: Text("Friend Requests")) {
                         ForEach(viewModel.friendRequests) { request in
                             HStack {
@@ -45,40 +65,37 @@ struct FriendsView: View {
                                         .font(.headline)
                                 }
                                 Spacer()
-                                
+
                                 HStack {
                                     Button(action: {
-                                        print("Decline button clicked for \(request.senderName)")
                                         viewModel.declineFriendRequest(request)
                                     }) {
                                         Image(systemName: "xmark")
                                             .foregroundColor(.red)
                                             .padding()
                                     }
-                                    .buttonStyle(BorderlessButtonStyle())  // Avoid issues with button styles
+                                    .buttonStyle(BorderlessButtonStyle())
 
                                     Button(action: {
-                                        print("Accept button clicked for \(request.senderName)")
                                         viewModel.acceptFriendRequest(request)
                                     }) {
                                         Image(systemName: "checkmark")
                                             .foregroundColor(.green)
                                             .padding()
                                     }
-                                    .buttonStyle(BorderlessButtonStyle())  // Avoid issues with button styles
+                                    .buttonStyle(BorderlessButtonStyle())
                                 }
-
                                 .padding(.vertical, 5)
                             }
                         }
                     }
                 }
-                
+
                 HStack {
                     TextField("Search friend's name", text: $searchQuery)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                    
+
                     Button(action: {
                         Task {
                             isSearching = true
@@ -91,7 +108,7 @@ struct FriendsView: View {
                     }
                     .padding()
                 }
-                
+
                 if isSearching {
                     ProgressView()
                         .padding()
@@ -109,6 +126,7 @@ struct FriendsView: View {
                             Spacer()
                             Button(action: {
                                 viewModel.sendFriendRequest(to: user)
+                                alertType = .sendRequest
                             }) {
                                 Text("Send Request")
                                     .foregroundColor(.blue)
@@ -118,8 +136,22 @@ struct FriendsView: View {
                 }
             }
             .navigationTitle("Friends")
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text("Alert"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+            .alert(item: $alertType) { alert in
+                switch alert {
+                case .sendRequest:
+                    return Alert(title: Text("Alert"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+                case .removeFriend:
+                    return Alert(
+                        title: Text("Remove Friend"),
+                        message: Text("Are you sure you want to remove \(friendToRemove?.name ?? "this friend") as a friend?"),
+                        primaryButton: .destructive(Text("Remove")) {
+                            if let friend = friendToRemove {
+                                viewModel.removeFriend(friend)
+                            }
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
             }
         }
         .onAppear {
