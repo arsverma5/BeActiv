@@ -57,11 +57,14 @@ struct ChallengesView: View {
             }
             .navigationTitle("Challenges")
         }
+        .onAppear {
+            viewModel.loadChallenges()
+        }
     }
     
     private func progressColor(for challenge: Challenge) -> Color {
         switch challenge.title {
-        case "Walk 10,000 Steps":
+        case "Walk 10,000+ Steps":
             return Color.green
         case "Beat 5 Friends":
             return Color.purple
