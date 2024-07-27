@@ -23,10 +23,9 @@ struct FriendLeaderboard: Identifiable, Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
-        case username = "name"
+        case username = "fullName" // Updated field name
         case steps = "stepCount"
         case challengesWon
     }
 }
-
 

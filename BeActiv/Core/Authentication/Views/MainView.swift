@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var viewModel: AuthViewModel
+    @StateObject private var leaderboardsViewModel = LeaderboardsViewModel()
 
     var body: some View {
         TabView {
@@ -30,18 +31,18 @@ struct MainView: View {
                 .tabItem {
                     Label("Leaderboards", systemImage: "list.star")
                 }
-                .environmentObject(LeaderboardsViewModel())
+                .environmentObject(leaderboardsViewModel) // Provide LeaderboardsViewModel
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
         }
+        .environmentObject(viewModel) // Provide AuthViewModel
     }
 }
 
 #Preview {
     MainView()
         .environmentObject(AuthViewModel())
+        .environmentObject(LeaderboardsViewModel())
 }
-
-

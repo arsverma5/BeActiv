@@ -4,7 +4,6 @@
 //
 //  Created by Arshia Verma on 7/2/24.
 //
-
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
@@ -75,7 +74,8 @@ struct HealthView: View {
                 print("Error updating steps: \(error)")
             } else {
                 print("Steps updated successfully")
-                leaderboardsViewModel.fetchFriends() // Refresh the leaderboard data
+                // Correctly call the method on the environment object
+                leaderboardsViewModel.fetchLeaderboardData() // Use fetchLeaderboardData if that's the actual method
             }
         }
     }

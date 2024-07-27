@@ -9,14 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    
+    @StateObject private var leaderboardsViewModel = LeaderboardsViewModel() // StateObject for the main ContentView
+
     var body: some View {
         Group {
             if viewModel.userSession != nil {
                 MainView()
-                    .environmentObject(LeaderboardsViewModel())
+                    .environmentObject(leaderboardsViewModel) // Provide LeaderboardsViewModel here
             } else {
                 LoginView()
+            }
+        }
+        .onAppear {
+            if viewModel.userSession != nil {
+                leaderboardsViewModel.fetchLeaderboardData() // Fetch data when the view appears
             }
         }
     }
@@ -29,4 +35,3 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(LeaderboardsViewModel())
     }
 }
-

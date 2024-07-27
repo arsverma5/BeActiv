@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LeaderboardsView: View {
     @State private var selectedTab = 0
     @StateObject private var viewModel = LeaderboardsViewModel()
+    private var loggedInUserId: String? {
+        Auth.auth().currentUser?.uid
+    }
     
     var body: some View {
         VStack {
@@ -39,17 +43,16 @@ struct LeaderboardsView: View {
             .padding(.horizontal, 20)
             
             if selectedTab == 0 {
-                LeaderboardView(leaderboardEntries: viewModel.stepsLeaderboardEntries)
+                LeaderboardView(leaderboardEntries: viewModel.stepsLeaderboardEntries, loggedInUserId: loggedInUserId ?? "")
             } else {
-                ChallengesLeaderboardView(leaderboardEntries: viewModel.challengesLeaderboardEntries)
+                ChallengesLeaderboardView(leaderboardEntries: viewModel.challengesLeaderboardEntries, loggedInUserId: loggedInUserId ?? "")
             }
             
             Spacer()
         }
         .padding(.top, 20)
         .onAppear {
-            viewModel.fetchFriends()
+            viewModel.fetchLeaderboardData()
         }
     }
 }
-
