@@ -23,9 +23,8 @@ struct FriendLeaderboard: Identifiable, Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
-        case username = "fullName" // Updated field name
+        case username = "fullName" // Update field name as per your Firestore schema
         case steps = "stepCount"
         case challengesWon
     }
 }
-

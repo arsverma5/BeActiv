@@ -8,34 +8,32 @@
 import SwiftUI
 
 struct ChallengesLeaderboardView: View {
-    var leaderboardEntries: [FriendLeaderboard]
+    var leaderboardEntries: [(rank: Int, user: FriendLeaderboard)]
     var loggedInUserId: String
 
     var body: some View {
         VStack {
-            Text("Challenges Leaderboard")
+            Text("Challenges Won Leaderboard")
                 .font(.title)
                 .padding()
 
-            // Display leaderboard entries with gold, silver, and bronze for top 3
             ForEach(leaderboardEntries.indices, id: \.self) { index in
                 HStack {
-                    Text("\(index + 1)")
+                    Text("\(leaderboardEntries[index].rank)")
                         .fontWeight(.bold)
                         .padding(.horizontal)
-                    Text(leaderboardEntries[index].username)
+                    Text(leaderboardEntries[index].user.username)
                         .padding(.horizontal)
                     Spacer()
-                    Text("\(leaderboardEntries[index].challengesWon) challenges won")
+                    Text("\(leaderboardEntries[index].user.challengesWon) challenges won")
                         .padding(.horizontal)
                 }
                 .padding(.vertical, 8)
-                .background(backgroundColor(for: index)) // Set background color based on rank
+                .background(backgroundColor(for: leaderboardEntries[index].rank))
                 .cornerRadius(10)
                 .padding(.horizontal)
                 .overlay(
-                    // Highlight logged-in user with special styling
-                    leaderboardEntries[index].id == loggedInUserId ?
+                    leaderboardEntries[index].user.id == loggedInUserId ?
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.black, lineWidth: 2)
                         .padding(.horizontal)
@@ -43,19 +41,22 @@ struct ChallengesLeaderboardView: View {
                 )
             }
         }
+        .onAppear {
+            print("Logged In User ID: \(loggedInUserId)")
+            print("Leaderboard Entries: \(leaderboardEntries)")
+        }
     }
 
-    // Function to return the background color based on the index
-    private func backgroundColor(for index: Int) -> Color {
-        switch index {
-        case 0:
-            return .gold // Gold for 1st place
+    private func backgroundColor(for rank: Int) -> Color {
+        switch rank {
         case 1:
-            return .silver // Silver for 2nd place
+            return .gold
         case 2:
-            return .bronze // Bronze for 3rd place
+            return .silver
+        case 3:
+            return .bronze
         default:
-            return .clear // No color for other places
+            return .clear
         }
     }
 }

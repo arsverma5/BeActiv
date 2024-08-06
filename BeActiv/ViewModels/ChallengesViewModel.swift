@@ -9,11 +9,17 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
+import FirebaseAuth
 
 class ChallengesViewModel: ObservableObject {
     @Published var challenges: [Challenge] = []
     private var db = Firestore.firestore()
     private var cancellables = Set<AnyCancellable>()
+    private var dailyCheckTimer: AnyCancellable?
+    
+    init() {
+        setupDailyCheck()
+    }
 
     func loadChallenges() {
         print("Start fetching challenges...")
@@ -71,11 +77,94 @@ class ChallengesViewModel: ObservableObject {
     }
 
 
+    func setupDailyCheck() {
+        //let nextMidnight = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 0), matchingPolicy: .nextTime)!
+        //let timeInterval = nextMidnight.timeIntervalSinceNow
+        let interval: TimeInterval = 60 // 60 seconds for testing
 
-    // Rest of the functions...
+        dailyCheckTimer = Timer.publish(every: interval, tolerance: 5, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                print("Daily check triggered")
+                self?.performDailyCheck()
+                //self?.setupDailyCheck() // Reschedule for the next day
+            }
+    }
+
+    func performDailyCheck() {
+        print("Performing daily check")
+        for challenge in challenges {
+            if challenge.title.contains("Winner Winner Chicken Dinner #1") {
+                print("Checking leaderboard for challenge: \(challenge.title)")
+                checkLeaderboardForChallenge(challenge)
+            }
+        }
+    }
+
+    func checkLeaderboardForChallenge(_ challenge: Challenge) {
+        // Fetch the leaderboard data
+        db.collection("leaderboard").document("stepsLeaderboard").getDocument { [weak self] (document, error) in
+            if let error = error {
+                print("Error fetching leaderboard: \(error.localizedDescription)")
+                return
+            }
+
+            if let document = document {
+                if document.exists {
+                    print("Document data: \(document.data() ?? [:])")
+                } else {
+                    print("Document does not exist")
+                }
+            } else {
+                print("No document returned")
+            }
+
+            guard let data = document?.data(), let userId = Auth.auth().currentUser?.uid else {
+                if Auth.auth().currentUser == nil {
+                    print("User not logged in")
+                } else {
+                    print("No data found in the leaderboard document")
+                }
+                return
+            }
+
+            if let firstPlaceUserId = data["firstPlaceUserId"] as? String {
+                print("First place user ID: \(firstPlaceUserId)")
+                if firstPlaceUserId == userId {
+                    print("User is in first place")
+                    self?.incrementProgressForChallenge(challenge)
+                } else {
+                    print("User is not in first place")
+                }
+            } else {
+                print("First place user ID not found in leaderboard data")
+            }
+        }
+    }
 
 
 
+
+    func incrementProgressForChallenge(_ challenge: Challenge) {
+        guard let index = challenges.firstIndex(where: { $0.id == challenge.id }) else {
+            print("Challenge not found in list: \(challenge.id ?? "unknown id")")
+            return
+        }
+
+        print("Incrementing progress for challenge: \(challenge.title)")
+        challenges[index].progress += 1.0 / 3.0 // Assuming 3 days for the challenge
+        print("New progress for challenge: \(challenges[index].progress)")
+
+        if challenges[index].progress >= 1.0 {
+            challenges[index].isCompleted = true
+            print("Challenge completed: \(challenge.title)")
+            awardBadge(for: challenges[index])
+        }
+
+        saveChallenge(challenges[index])
+    }
+
+    // Other functions...
 
     func startChallenge(_ challenge: Challenge) {
         var mutableChallenge = challenge

@@ -7,9 +7,9 @@ extension Color {
 }
 
 struct LeaderboardView: View {
-    var leaderboardEntries: [FriendLeaderboard]
+    var leaderboardEntries: [(rank: Int, user: FriendLeaderboard)]
     var loggedInUserId: String
-
+    
     var body: some View {
         VStack {
             Text("Steps Walked Leaderboard")
@@ -18,21 +18,21 @@ struct LeaderboardView: View {
 
             ForEach(leaderboardEntries.indices, id: \.self) { index in
                 HStack {
-                    Text("\(index + 1)")
+                    Text("\(leaderboardEntries[index].rank)")
                         .fontWeight(.bold)
                         .padding(.horizontal)
-                    Text(leaderboardEntries[index].username)
+                    Text(leaderboardEntries[index].user.username)
                         .padding(.horizontal)
                     Spacer()
-                    Text("\(leaderboardEntries[index].steps) steps")
+                    Text("\(leaderboardEntries[index].user.steps) steps")
                         .padding(.horizontal)
                 }
                 .padding(.vertical, 8)
-                .background(backgroundColor(for: index))
+                .background(backgroundColor(for: leaderboardEntries[index].rank))
                 .cornerRadius(10)
                 .padding(.horizontal)
                 .overlay(
-                    leaderboardEntries[index].id == loggedInUserId ?
+                    leaderboardEntries[index].user.id == loggedInUserId ?
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.black, lineWidth: 2)
                         .padding(.horizontal)
@@ -46,13 +46,13 @@ struct LeaderboardView: View {
         }
     }
 
-    private func backgroundColor(for index: Int) -> Color {
-        switch index {
-        case 0:
-            return .gold
+    private func backgroundColor(for rank: Int) -> Color {
+        switch rank {
         case 1:
-            return .silver
+            return .gold
         case 2:
+            return .silver
+        case 3:
             return .bronze
         default:
             return .clear

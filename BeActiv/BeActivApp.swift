@@ -22,12 +22,12 @@ struct BeActivApp: App {
             ContentView()
                 .environmentObject(viewModel)
                 .onAppear {
-                    // Add predefined challenges on app start
-                    challengeManager.addPredefinedChallenges { error in
+                    // Clear and add predefined challenges on app start
+                    challengeManager.clearAndAddPredefinedChallenges { error in
                         if let error = error {
-                            print("Error adding predefined challenges: \(error.localizedDescription)")
+                            print("Error resetting challenges: \(error.localizedDescription)")
                         } else {
-                            print("Predefined challenges added successfully.")
+                            print("Challenges reset successfully.")
                         }
                     }
                 }
