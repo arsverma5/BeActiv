@@ -33,7 +33,22 @@ BeActiv is a social fitness app that combines step tracking and fun challenges t
 ## Screenshots:
 
 
+
+<img src="https://github.com/user-attachments/assets/5911151c-79d5-4e53-b62e-908b0505204e" width="300" height="600">
+
+<img src="https://github.com/user-attachments/assets/8a4dbe08-1cbe-4c7f-8929-229c49774758" width="300" height="600">
+
+<img src="https://github.com/user-attachments/assets/6e853e42-05a9-4d73-935b-5897c6ef5b5a" width="300" height="600">
+
+<img src="https://github.com/user-attachments/assets/5fd8849a-df3c-4ad6-b4ad-5e6b5c97d5e4" width="300" height="600">
+<img src="https://github.com/user-attachments/assets/218bfe6b-0ece-4131-b3d9-81e0e475c122" width="300" height="600">
+<img src="https://github.com/user-attachments/assets/1dbc8bfc-2d05-42a9-ae95-acf0b70814b2" width="300" height="600">
+<img src="https://github.com/user-attachments/assets/c098a48a-19a7-4983-b64b-35bf5585ae9f" width="300" height="600">
+
+
+
 ## Installation: 
+
 
 1. Clone the repository:
      git clone https://github.com/yourusername/beactiv.git
