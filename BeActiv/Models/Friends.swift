@@ -8,12 +8,11 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct Friends: Identifiable, Codable {
-    @DocumentID var id: String? = UUID().uuidString
+    @DocumentID var id: String?
     var name: String
     var imageName: String
     
-    
-    init(id: String? = UUID().uuidString, name: String, imageName: String) {
+    init(id: String? = nil, name: String, imageName: String) {
         self.id = id
         self.name = name
         self.imageName = imageName

@@ -16,7 +16,7 @@ class LeaderboardsViewModel: ObservableObject {
         let userRef = db.collection("users").document(userID)
         let friendsRef = userRef.collection("friends")
 
-        // Fetch friends' data
+        // Fetch friends' IDs
         friendsRef.getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error fetching friends: \(error.localizedDescription)")
@@ -28,30 +28,14 @@ class LeaderboardsViewModel: ObservableObject {
                 return
             }
 
-            var friends = [FriendLeaderboard]()
-            let dispatchGroup = DispatchGroup()
+            // Collect all friend IDs
+            let friendIDs = documents.map { $0.documentID }
 
-            for doc in documents {
-                let friendID = doc.documentID
-                dispatchGroup.enter()
-                self.fetchSpecificUserData(userID: friendID) { friend in
-                    if let friend = friend {
-                        friends.append(friend)
-                    }
-                    dispatchGroup.leave()
-                }
-            }
+            // Include the logged-in user's ID
+            let allUserIDs = friendIDs + [userID]
 
-            // Fetch logged-in user's data
-            dispatchGroup.enter()
-            self.fetchSpecificUserData(userID: userID) { loggedInUser in
-                if let loggedInUser = loggedInUser {
-                    friends.append(loggedInUser)
-                }
-                dispatchGroup.leave()
-            }
-
-            dispatchGroup.notify(queue: .main) {
+            // Fetch data for all users in a single Firestore query using 'in' clause
+            self.fetchMultipleUsersData(userIDs: allUserIDs) { friends in
                 // Sort and rank
                 self.stepsLeaderboardEntries = self.rankLeaderboard(friends: friends, keyPath: \.steps)
                 self.challengesLeaderboardEntries = self.rankLeaderboard(friends: friends, keyPath: \.challengesWon)
@@ -62,30 +46,37 @@ class LeaderboardsViewModel: ObservableObject {
         }
     }
 
-    private func fetchSpecificUserData(userID: String, completion: @escaping (FriendLeaderboard?) -> Void) {
-        let userRef = db.collection("users").document(userID)
+    private func fetchMultipleUsersData(userIDs: [String], completion: @escaping ([FriendLeaderboard]) -> Void) {
+        db.collection("users")
+            .whereField(FieldPath.documentID(), in: userIDs)
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error fetching users data: \(error.localizedDescription)")
+                    completion([])
+                    return
+                }
 
-        userRef.getDocument { (document, error) in
-            if let error = error {
-                print("Error fetching user data for \(userID): \(error.localizedDescription)")
-                completion(nil)
-                return
+                guard let documents = snapshot?.documents else {
+                    print("No user data found.")
+                    completion([])
+                    return
+                }
+
+                // Map documents to FriendLeaderboard objects
+                let friends = documents.compactMap { document -> FriendLeaderboard? in
+                    let data = document.data()
+
+                    return FriendLeaderboard(
+                        id: document.documentID,
+                        username: data["fullName"] as? String ?? "Unknown",
+                        steps: data["stepCount"] as? Int ?? 0,
+                        challengesWon: data["challengesWon"] as? Int ?? 0
+                    )
+                }
+
+
+                completion(friends)
             }
-
-            guard let data = document?.data() else {
-                print("No data found for user ID \(userID)")
-                completion(nil)
-                return
-            }
-
-            let friend = FriendLeaderboard(
-                id: userID,
-                username: data["fullName"] as? String ?? "Unknown",
-                steps: data["stepCount"] as? Int ?? 0,
-                challengesWon: data["challengesWon"] as? Int ?? 0
-            )
-            completion(friend)
-        }
     }
 
     private func rankLeaderboard(friends: [FriendLeaderboard], keyPath: KeyPath<FriendLeaderboard, Int>) -> [(rank: Int, user: FriendLeaderboard)] {
